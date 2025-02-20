@@ -5,6 +5,15 @@
              x:Class="ComShopApp.App">
     <Application.Resources>
         <ResourceDictionary>
+            <!--Aca se pueden agregar ajustes de estilos un poco mas personalizados o se pueden poner directamente en Styles.xaml-->
+            <Style TargetType="Grid" x:Key="BackgroundPage">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="{AppThemeBinding Light='#6dfcd5', Dark='#1b304f'}"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Padding" Value="25"/>
+            </Style>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />

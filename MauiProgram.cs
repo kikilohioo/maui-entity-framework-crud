@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using ComShopApp.DataAccess;
+using Microsoft.Extensions.Logging;
 
 namespace ComShopApp
 {
@@ -14,6 +15,10 @@ namespace ComShopApp
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            var dbContext = new ShopDBContext();
+            dbContext.Database.EnsureCreated();
+            dbContext.Dispose();
 
 #if DEBUG
     		builder.Logging.AddDebug();

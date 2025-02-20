@@ -1,4 +1,7 @@
-﻿namespace ComShopApp
+﻿using ComShopApp.DataAccess;
+using Microsoft.Maui.Controls.Shapes;
+
+namespace ComShopApp
 {
     public partial class MainPage : ContentPage
     {
@@ -7,19 +10,19 @@
         public MainPage()
         {
             InitializeComponent();
+
+            var dbContext = new ShopDBContext();
+            category.Text = dbContext.Categories.Count().ToString();
+            product.Text = dbContext.Products.Count().ToString();
+            client.Text = dbContext.Clients.Count().ToString();
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
-        {
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
-        }
+        // Para probar codigo de animaciones
+        //private void Rectanlge_Tapped(object sender, TappedEventArgs e)
+        //{
+        //    (sender as Rectangle)?.ScaleTo(2);
+        //    (sender as Rectangle)?.TranslateTo(200, 200);
+        //}
     }
 
 }
