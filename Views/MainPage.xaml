@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ComShopApp.MainPage">
+             x:Class="ComShopApp.Views.MainPage">
 
     <!--#region ######    Sumario de aprendizajez    ######-->
     <!--Aprendizajes generales sobre manejos de layouts-->
@@ -27,17 +27,32 @@
         >
 
         <!--categorias-->
-        <Ellipse WidthRequest="50" HeightRequest="50" Fill="LightBlue" Margin="4"/>
+        <Ellipse
+            WidthRequest="50" 
+            HeightRequest="50" 
+            Fill="LightBlue" 
+            Margin="4"
+            />
         <Label 
             x:Name="category" 
             VerticalTextAlignment="Center" 
             HorizontalTextAlignment="Center" 
             FontSize="30"
             />
-        <Label Text="Categorias" VerticalTextAlignment="Center"  FontSize="30" Grid.Column="1"/>
+        <Label 
+            Text="Categorias" 
+            VerticalTextAlignment="Center"  
+            FontSize="30" 
+            Grid.Column="1"
+            />
 
         <!--productos-->
-        <Ellipse WidthRequest="50" HeightRequest="50" Fill="LightBlue" Margin="4" Grid.Row="1"/>
+        <Ellipse
+            WidthRequest="50" 
+            HeightRequest="50" 
+            Fill="LightBlue" 
+            Margin="4" Grid.Row="1"
+            />
         <Label 
             x:Name="product" 
             VerticalTextAlignment="Center" 
@@ -45,10 +60,22 @@
             FontSize="30"
             Grid.Row="1"
             />
-        <Label Text="Productos" VerticalTextAlignment="Center"  FontSize="30" Grid.Column="1" Grid.Row="1"/>
+        <Label 
+            Text="Productos" 
+            VerticalTextAlignment="Center"  
+            FontSize="30" 
+            Grid.Column="1" 
+            Grid.Row="1"
+            />
 
         <!--clientes-->
-        <Ellipse WidthRequest="50" HeightRequest="50" Fill="LightBlue" Margin="4" Grid.Row="2"/>
+        <Ellipse 
+            WidthRequest="50" 
+            HeightRequest="50" 
+            Fill="LightBlue" 
+            Margin="4" 
+            Grid.Row="2"
+            />
         <Label 
             x:Name="client" 
             VerticalTextAlignment="Center" 
@@ -56,7 +83,13 @@
             FontSize="30"
             Grid.Row="2"
             />
-        <Label Text="Clientes" VerticalTextAlignment="Center"  FontSize="30" Grid.Column="1" Grid.Row="2"/>
+        <Label 
+            Text="Clientes" 
+            VerticalTextAlignment="Center"  
+            FontSize="30" 
+            Grid.Column="1" 
+            Grid.Row="2"
+            />
 
     </Grid>
     

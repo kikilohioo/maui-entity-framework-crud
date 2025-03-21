@@ -1,7 +1,7 @@
 ﻿using ComShopApp.DataAccess;
 using Microsoft.Maui.Controls.Shapes;
 
-namespace ComShopApp
+namespace ComShopApp.Views
 {
     public partial class MainPage : ContentPage
     {

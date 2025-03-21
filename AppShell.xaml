@@ -4,12 +4,138 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ComShopApp"
+    xmlns:views="clr-namespace:ComShopApp.Views"
     Shell.FlyoutBehavior="Flyout"
-    Title="ComShopApp">
+    Title="ComShopApp"
+    xmlns:info="clr-namespace:Microsoft.Maui.ApplicationModel;assembly=Microsoft.Maui.Essentials"
+    >
+
+    <!--#region ######    Sumario de aprendizajez    ######-->
+    <!--
+    
+    Si utilizamos la linea asi: Shell.FlyoutBehavior="Flyout", hace que aparezca el menu lateral 
+    con las opciones definidas debajo. Ademas estas opciones pueden ser directamente:
+    
+        <ShellContent
+            Title="About"
+            ContentTemplate="{DataTemplate views:AboutPage}"
+            Route="AboutPage" />
+    
+    para paginas que no tienen tabs o sea paginas lisas, tambien pueden ser asi:
+    
+        <FlyoutItem Title="Configuracion">
+            <Tab Title="Resumen">
+                <ShellContent
+                    Title="Home"
+                    ContentTemplate="{DataTemplate views:MainPage}"
+                    Route="MainPage" />
+            </Tab>
+        ...
+        </FlyoutItem>
+    
+    para utilizar un item en el menu lateral que ademas tenga tabs de navegacion nativo
+    
+    -->    
+    <!--#endregion-->
+
+    <!--esto es como un header y dentro puse un logo para poner cuando se abre el menu-->
+    <Shell.FlyoutHeader>
+        <Image Source="dotnet_bot.png" WidthRequest="150" Margin="20" />
+    </Shell.FlyoutHeader>
+
+    <!--esto es un footer y podemos poner lo que quieramos aqui-->
+    <Shell.FlyoutFooter>
+        <VerticalStackLayout Padding="10">
+            <Label Text="{x:Static info:AppInfo.Name}" />
+            <Label Text="{x:Static info:AppInfo.VersionString}" />
+        </VerticalStackLayout>
+    </Shell.FlyoutFooter>
+
+    <!-- como esta es la primer pagina que se procesa en el appshell es donde iria la logica de verificar si tenemos una sesión iniciada -->
+    <ShellContent
+        Title="Loading"
+        ContentTemplate="{DataTemplate views:LoadingPage}"
+        Route="LoadingPage" 
+        Shell.FlyoutItemIsVisible="False"
+        />
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Title="Resumen de Ventas"
+        ContentTemplate="{DataTemplate views:DashboardPage}"
+        Route="DashboardPage" />
+
+    <ShellContent
+        Title="Sobre la tienda"
+        ContentTemplate="{DataTemplate views:AboutPage}"
+        Route="AboutPage" />
+
+    <FlyoutItem Title="Configuracion">
+        <Tab Title="Resumen">
+            <ShellContent
+                Title="Resumen"
+                ContentTemplate="{DataTemplate views:MainPage}"
+                Route="MainPage" />
+        </Tab>
+        <Tab Title="Productos">
+            <ShellContent
+                Title="Productos"
+                ContentTemplate="{DataTemplate views:ProductsPage}"
+                Route="ProductsPage" />
+        </Tab>
+        <Tab Title="Categorias">
+            <ShellContent
+                Title="Categorias"
+                ContentTemplate="{DataTemplate views:CategoriesPage}"
+                Route="CategoriesPage" />
+        </Tab>
+        <Tab Title="Clientes">
+            <ShellContent
+            Title="Clientes"
+            ContentTemplate="{DataTemplate views:ClientsPage}"
+            Route="ClientsPage" />
+        </Tab>
+    </FlyoutItem>
+
+    <ShellContent 
+        Title="Soporte técnico"
+        ContentTemplate="{DataTemplate views:HelpSupportPage}"
+        Route="HelpSupportPage"
+        />
+
+    <MenuItem 
+        Text="Ir a example.com"
+        Clicked="IrAExampleDotCom_Clicked"
+        />
+
+    <FlyoutItem Title="Venta de Inmuebles">
+        <Tab Title="Inicio" Icon="home_icon">
+            <ShellContent 
+                Title="Inicio"
+                ContentTemplate="{DataTemplate views:HomePage}"
+                Route="HomePage"
+                />
+        </Tab>
+        <Tab Title="Guardados" Icon="bookmark_icon">
+            <ShellContent 
+                Title="Guardados"
+                ContentTemplate="{DataTemplate views:BookmarkPage}"
+                Route="BookmarkPage"
+                />
+        </Tab>
+        <Tab Title="Ajustes" Icon="settings_icon">
+            <ShellContent 
+                Title="Ajustes"
+                ContentTemplate="{DataTemplate views:SettingsPage}"
+                Route="SettingsPage "
+                />
+        </Tab>
+    </FlyoutItem>
+
+    <ShellContent 
+        Shell.NavBarIsVisible="False"
+        Title="Cerrar Sesión"
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        Route="LoginPage"
+        />
 
 </Shell>

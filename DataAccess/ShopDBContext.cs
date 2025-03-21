@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ComShopApp.DataAccess;
@@ -13,6 +14,7 @@ public class ShopDBContext : DbContext
     public DbSet<Category> Categories { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Client> Clients { get; set; }
+    //public DbSet<Purchase> Purchases { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -68,8 +70,19 @@ public class ShopDBContext : DbContext
 
 // se utilizan records porque son diseñados solo para gestionar datos, es mejor que las clases en este caso de uso
 public record Category(int Id, string Name);
-public record Product(int Id, string Name, string Description, decimal Value, int CategoryId)
+
+public record Product(int Id, string Name, string Description, decimal Price, int CategoryId)
 {
     public Category Category { get; set; }
 }
-public record Client(int Id, string Name, string Direction);
+
+public record Client(int Id, string Name, string Address);
+
+public record Purchase(
+    [property: JsonPropertyName("clientId")] int ClientId,
+    [property: JsonPropertyName("productId")] int ProductId,
+    [property: JsonPropertyName("cantidad")] int Quantity,
+    [property: JsonPropertyName("productoNombre")] string ProductName,
+    [property: JsonPropertyName("productoPrecio")] decimal ProductPrice,
+    [property: JsonPropertyName("total")] decimal Total
+    );

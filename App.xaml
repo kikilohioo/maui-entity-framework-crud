@@ -2,9 +2,100 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ComShopApp"
+             xmlns:data="clr-namespace:ComShopApp.DataAccess"
+             xmlns:converters="clr-namespace:ComShopApp.Converters"
              x:Class="ComShopApp.App">
     <Application.Resources>
         <ResourceDictionary>
+            <!--
+            luego de creado el converter se declara el namespace, se incluye el converter
+            y luego se utilizar en los elementos que se requiera
+            -->
+            <converters:PriceForColorConverter x:Key="PriceForColorConverter" />
+            <!--
+            esto es un data template para mejorar "componentes" de GUI
+            en este caso definimos uno para mostrar la info de un producto en un
+            CollectionView y que sea mejor la info que muestra
+            -->
+            <!-- Product card data template -->
+            <DataTemplate x:Key="ProductDataTemplate" x:DataType="data:Product">
+                <Grid ColumnDefinitions="*, Auto" Padding="4" HeightRequest="80">
+                    <VerticalStackLayout VerticalOptions="Center">
+                        <Label Text="{Binding Name}" FontAttributes="Bold" />
+                        <Label Text="{Binding Description}" />
+                    </VerticalStackLayout>
+                    <Label 
+                        Grid.Column="1"
+                        VerticalOptions="Center"
+                        FontAttributes="Bold"
+                        FontAutoScalingEnabled="True"
+                        Text="{Binding Price, StringFormat='{0:C}'}"
+                        TextColor="{Binding Price, Converter={StaticResource PriceForColorConverter}}"
+                        />
+                </Grid>
+            </DataTemplate>
+            
+            <!-- Client slide carrousel data template -->
+            <DataTemplate x:Key="ClientSlideDataTemplate" x:DataType="data:Client">
+                <VerticalStackLayout VerticalOptions="Center">
+                    <Image Source="dotnet_bot.svg" WidthRequest="200" />
+                    <Label 
+                        Text="{Binding Name}" 
+                        HorizontalOptions="Center"
+                        FontSize="Subtitle"
+                        Margin="10"
+                        />
+                                <Label 
+                        Text="{Binding Address}" 
+                        HorizontalOptions="Center"
+                        />
+                </VerticalStackLayout>
+            </DataTemplate>
+            
+            <!--Purchase detail item data template-->
+            <DataTemplate x:Key="PurchaseDetailDataTemplate" x:DataType="data:Purchase">
+                <SwipeView>
+                    <SwipeView.RightItems>
+                        <SwipeItems>
+                            <SwipeItem 
+                                Command="{
+                                    Binding BindingContext.DeletePurchaseCommand,
+                                    Source={x:RelativeSource AncestorType={x:Type ContentPage}}
+                                }"
+                                CommandParameter="{Binding}"
+                                Text="Eliminar"
+                                BackgroundColor="IndianRed"
+                                />  
+                        </SwipeItems>
+                    </SwipeView.RightItems>
+                    <Grid
+                        ColumnDefinitions="*,3*,*,*"
+                        HeightRequest="60"
+                        Padding="4"
+                        >       
+                        <Label
+                            Text="{Binding Quantity}"
+                            VerticalTextAlignment="Center"
+                            />
+                        <Label
+                            Text="{Binding ProductName}"
+                            VerticalTextAlignment="Center"
+                            Grid.Column="1"
+                            />
+                        <Label
+                            Text="{Binding ProductPrice, StringFormat='{0:C}'}"
+                            VerticalTextAlignment="Center"
+                            Grid.Column="2"
+                            />
+                        <Label
+                            Text="{Binding Total, StringFormat='{0:C}'}"
+                            VerticalTextAlignment="Center"
+                            Grid.Column="3"
+                            />
+                    </Grid>
+                </SwipeView>
+            </DataTemplate>
+
             <!--Aca se pueden agregar ajustes de estilos un poco mas personalizados o se pueden poner directamente en Styles.xaml-->
             <Style TargetType="Grid" x:Key="BackgroundPage">
                 <Setter Property="Background">

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ComShopApp.Views.HelpSupportPage"
+             xmlns:viewmodels="clr-namespace:ComShopApp.ViewModels"
+             Title="HelpSupportPage">
+    <!--#region Forma mas practica de hacer lo mismo-->
+    <!--este binding context es el famoso ViewModel-->
+    <!--
+    ahora esto se comento porque se utilizo inyeccion de dependencias en el MauiProgram.cs
+    lo que se hace debajo es posible de replicarse utilizando AddTransient()
+    -->
+    <!--<ContentPage.BindingContext>
+        <viewmodels:HelpSupportViewModel PendingVisitors="10"/>
+    </ContentPage.BindingContext>-->
+    <Grid RowDefinitions="Auto,*">
+        <!--
+            con el BindingContext solo indicamos la Propiedad y el Mode para decir como se van a relacionar la fuente y la vista
+            como en este ejemplo:
+            { Binding Propiedad, Mode=TwoWay } 
+        -->
+        <Label 
+            Text="{Binding Clients.Count, Mode=OneWay}"
+            FontSize="30"
+        />
+        <!--
+            este boton tiene asociado un EventHandler que modifica la información de "data"
+    
+            <Button Text="Actualizar" Clicked="UpdateButton_Clicked" />
+        -->
+        <CollectionView 
+            Grid.Row="1"
+            SelectionMode="Single"
+            SelectedItem="{Binding SelectedClient, Mode=TwoWay}"
+            ItemsSource="{Binding Clients, Mode=OneWay}"
+        />
+    </Grid>
+    <!--#endregion-->
+    
+    <!--#region Forma mas manual y controlada de hacerlo-->
+    <!--
+        esta es la forma mas manual de hacerlo pero se puede simplificar como vemos arriba
+    
+        <ContentPage.Resources>
+            --><!--de esta forma en "data" tendremos acceso a todos los atributos y metodos de la clase "HelpSupportData"--><!--
+            <models:HelpSupportData x:Key="data" PendingVisitors="10"/>
+        </ContentPage.Resources>
+    -->
+    <!--<Grid RowDefinitions="Auto,*">
+        --><!--y asi accedemos a "data" que es la conexión con toda la clase,
+        indicandole Path que es la ruta al enlace con una propiedad podemos obtener el valor de la misma
+        e indicamos el Mode para decir como se van a relacionar la fuente y la vista
+        como en este ejemplo:
+        { Binding Source={StaticResource enlace}, Path=Propiedad, Mode=TwoWay } --><!--
+        <Label 
+            Text="{Binding 
+                    Source={StaticResource data}, 
+                    Path=PendingVisitors,
+                    Mode=OneWay
+                }"
+            FontSize="30"
+            />
+        --><!--
+            este boton tiene asociado un EventHandler que modifica la información de "data"
+        
+            <Button Text="Actualizar" Clicked="UpdateButton_Clicked" />
+        --><!--
+        <CollectionView 
+            Grid.Row="1"
+            ItemsSource="{Binding 
+                    Source={StaticResource data},
+                    Path=Clients,
+                    Mode=OneWay
+                }"
+            />
+    </Grid>-->
+    <!--#endregion-->
+</ContentPage>
