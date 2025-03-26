@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:ComShopApp.Models.Backend.Inmueble"
+             xmlns:vm="clr-namespace:ComShopApp.ViewModels"
+             x:DataType="vm:HomeViewModel"
              x:Class="ComShopApp.Views.HomePage"
              Title="Venta de Inmuebles">
     <ScrollView>
@@ -12,7 +15,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <VerticalStackLayout Grid.Row="0" Spacing="5" >
-                <Label Text="Jose Lopez"  FontSize="Large" />
+                <Label Text="{Binding UserName}"  FontSize="Large" />
                 <Label Text="Encuentra tu mejor lugar para vivir" FontSize="Medium" />
             </VerticalStackLayout>
             <Border Grid.Row="1" Padding="15">
@@ -21,7 +24,7 @@
                     <Label Text="Busqueda" VerticalOptions="Center" />
                 </HorizontalStackLayout>
                 <Border.GestureRecognizers>
-                    <TapGestureRecognizer />
+                    <TapGestureRecognizer Command="{Binding TapSearchInmueblesCommand}" />
                 </Border.GestureRecognizers>
             </Border>
             <VerticalStackLayout Grid.Row="2" Spacing="20">
@@ -29,11 +32,110 @@
                 <CollectionView 
                     SelectionMode="Single"
                     HeightRequest="50"
-                    BackgroundColor="White"
+                    BackgroundColor="{AppThemeBinding Light=White}"
+                    ItemsSource="{Binding Categories}"
+                    SelectedItem="{Binding SelectedCategory}"
+                    SelectionChangedCommand="{Binding CategorySelectedEventCommand}"
                     >
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout ItemSpacing="25" Orientation="Horizontal" />
                     </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <!-- como acá defino en datatype del datatemplate CategoryResponse, significa que internamente
+                        ya puedo utilizar asi una forma de acceder a la data de ese Model {Binding NombreAtributo} -->
+                        <DataTemplate x:DataType="model:CategoryResponse">
+                            <Border 
+                                Padding="16, 8" 
+                                HorizontalOptions="Center"
+                                >
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10" />
+                                </Border.StrokeShape>
+                                <HorizontalStackLayout Spacing="5" HeightRequest="25">
+                                    <Image
+                                        Aspect="AspectFit"
+                                        HeightRequest="25"
+                                        WidthRequest="25"
+                                        Source="{Binding ImageUrl}"
+                                        />
+                                    <Label
+                                        VerticalOptions="Center"
+                                        FontSize="Medium"
+                                        Text="{Binding CategoryName}"
+                                        />
+                                </HorizontalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Row="3" Spacing="20">
+                <Label 
+                    Text="Mas vistos"
+                    FontSize="Large"
+                    />
+                <CollectionView
+                    HeightRequest="350"
+                    SelectionMode="Single"
+                    ItemsSource="{Binding TrendingInmuebles}"
+                    >
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="20" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate
+                            x:DataType="model:InmuebleResponse"
+                            >
+                            <Border 
+                                Padding="15" 
+                                BackgroundColor="{AppThemeBinding Light=White}"
+                                >
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="15" />
+                                </Border.StrokeShape>
+                                <Grid RowSpacing="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Border
+                                        Grid.Row="0"
+                                        HeightRequest="200"
+                                        WidthRequest="250"
+                                        Padding="0"
+                                        >
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="25" />
+                                        </Border.StrokeShape>
+                                        <Image 
+                                            Aspect="Fill" 
+                                            Source="{Binding UrlImage}"
+                                            />
+                                    </Border>
+                                    <Label
+                                        Grid.Row="1"
+                                        Text="{Binding Name}"
+                                        FontSize="Subtitle"
+                                        />
+                                    <Label
+                                        Grid.Row="2"
+                                        Text="{Binding Descripcion}"
+                                        FontSize="Small"
+                                        WidthRequest="250"
+                                        LineBreakMode="TailTruncation"
+                                        />
+                                    <Label
+                                        Grid.Row="3"
+                                        Text="{Binding Price, StringFormat='{0:C}'}"
+                                        FontSize="Subtitle"
+                                        TextColor="#1d94ab"
+                                        />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
                 </CollectionView>
             </VerticalStackLayout>
         </Grid>

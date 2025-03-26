@@ -15,7 +15,12 @@ namespace ComShopApp.Utils
     //    public event PropertyChangedEventHandler? PropertyChanged;
     //}
     // #########    VERSION CON TOOLKIT   #########
-    public abstract class ViewModelGlobal : ObservableObject
+    public partial class ViewModelGlobal : ObservableObject
     {
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsNotBusy))]
+        bool isBusy;
+
+        public bool IsNotBusy => !IsBusy;
     }
 }

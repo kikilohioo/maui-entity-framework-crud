@@ -1,4 +1,5 @@
-﻿using ComShopApp.DataAccess;
+﻿using CommunityToolkit.Maui;
+using ComShopApp.DataAccess;
 using ComShopApp.Interfaces;
 using ComShopApp.Services;
 using ComShopApp.ViewModels;
@@ -22,6 +23,7 @@ namespace ComShopApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -36,6 +38,7 @@ namespace ComShopApp
             builder.Services.AddSingleton(Connectivity.Current);
             builder.Services.AddSingleton<PurchaseService>();
             builder.Services.AddSingleton<HttpClient>();
+            builder.Services.AddSingleton<InmuebleService>();
 
             // login service, page y vm
             builder.Services.AddSingleton<SecurityService>();
@@ -77,6 +80,15 @@ namespace ComShopApp
             builder.Services.AddTransient<SettingsViewModel>();
             builder.Services.AddTransient<SettingsPage>();
 
+            builder.Services.AddTransient<InmuebleListViewModel>();
+            builder.Services.AddTransient<InmuebleListPage>();
+
+            builder.Services.AddTransient<InmuebleDetailViewModel>();
+            builder.Services.AddTransient<InmuebleDetailPage>();
+
+            builder.Services.AddTransient<InmuebleSearchViewModel>();
+            builder.Services.AddTransient<InmuebleSearchPage>();
+
             /* ##### SCOPED ##### */
 
             var dbContext = new ShopDBContext();
@@ -87,9 +99,12 @@ namespace ComShopApp
             // recibir parametros como el id de un producto para mostrar detalles, etc
             Routing.RegisterRoute(nameof(ProductDetailPage), typeof(ProductDetailPage));
             Routing.RegisterRoute(nameof(HelpSupportDetailPage), typeof(HelpSupportDetailPage));
-            Routing.RegisterRoute(nameof(LoadingPage), typeof(LoadingPage));
+            Routing.RegisterRoute(nameof(InmuebleListPage), typeof(InmuebleListPage));
+            Routing.RegisterRoute(nameof(InmuebleDetailPage), typeof(InmuebleDetailPage));
+            Routing.RegisterRoute(nameof(InmuebleSearchPage), typeof(InmuebleSearchPage));
 
             // estos ultimos dos se registran para hacer bien la logica del login y logout
+            Routing.RegisterRoute(nameof(LoadingPage), typeof(LoadingPage));
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
             Routing.RegisterRoute(nameof(DashboardPage), typeof(DashboardPage));
 

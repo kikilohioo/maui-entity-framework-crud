@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ComShopApp.Views.InmuebleDetailPage"
+             xmlns:model="clr-namespace:ComShopApp.Models.Backend.Inmueble"
+             xmlns:vm="clr-namespace:ComShopApp.ViewModels"
+             x:DataType="vm:InmuebleDetailViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="InmuebleDetailPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Image 
+            Grid.Row="0"
+            VerticalOptions="Start"
+            Aspect="Fill"
+            HeightRequest="280"
+            Grid.RowSpan="3"
+            Source="{Binding Inmueble.UrlImage}"
+            />
+        <StackLayout Grid.Row="1" Margin="20,0,20,0" Spacing="10" Orientation="Horizontal">
+            <ImageButton 
+                Source="back_icon"
+                CornerRadius="10"
+                BackgroundColor="White"
+                HeightRequest="40"
+                WidthRequest="40"
+                Padding="12"
+                HorizontalOptions="Start"
+                VerticalOptions="Start"
+                Command="{Binding GoBackEventCommand}"
+                />
+            <ImageButton 
+                Source="{Binding BookmarkImageSource}"
+                CornerRadius="10"
+                BackgroundColor="White"
+                HeightRequest="40"
+                WidthRequest="40"
+                Padding="12"
+                HorizontalOptions="EndAndExpand"
+                VerticalOptions="Start"
+                Command="{Binding SaveBookmarkCommand}"
+                />
+        </StackLayout>
+        <VerticalStackLayout Grid.Row="3" Margin="20">
+            <Label 
+                Text="{Binding Inmueble.Price, StringFormat='{0:C}'}"
+                FontSize="Subtitle"
+                />
+            <HorizontalStackLayout Margin="0,10">
+                <ImageButton 
+                    Source="location_icon"
+                    CornerRadius="10"
+                    BackgroundColor="White"
+                    HeightRequest="25"
+                    WidthRequest="25"
+                    Padding="2"
+                    Margin="0,0,5,0"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Start"
+                    />
+                <Label 
+                    Text="{Binding Inmueble.Address}"
+                    FontSize="Medium"
+                    />
+            </HorizontalStackLayout>
+            <Label 
+                Text="Descripción"
+                FontSize="Title"
+                Margin="0,10,0,20"
+                />
+            <Label 
+                Text="{Binding Inmueble.Descripcion}"
+                FontSize="Small"
+                />
+        </VerticalStackLayout>
+        <HorizontalStackLayout 
+            Grid.Row="4"
+            VerticalOptions="EndAndExpand" 
+            HorizontalOptions="Center"
+            Margin="0,10"
+            Spacing="30"
+            >
+            <Border
+                HeightRequest="70"
+                WidthRequest="150"
+                BackgroundColor="{AppThemeBinding Dark='#2ad6f7', Light='#1d94ab'}"
+                >
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="35" />
+                </Border.StrokeShape>
+                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Image
+                        HeightRequest="25"
+                        WidthRequest="25"
+                        VerticalOptions="Center"
+                        Source="message_icon"
+                        />
+                    <Label
+                        Text="Mensaje"
+                        FontSize="Medium"
+                        VerticalOptions="Center"
+                        TextColor="{AppThemeBinding Dark={StaticResource Quaternary}, Light=White}"
+                        />
+                </HorizontalStackLayout>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding TextMessageOwnerCommand}" />
+                </Border.GestureRecognizers>
+            </Border>
+            <Border
+                HeightRequest="70"
+                WidthRequest="150"
+                BackgroundColor="{AppThemeBinding Dark='#2ad6f7', Light='#1d94ab'}"
+                >
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="35" />
+                </Border.StrokeShape>
+                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Image
+                        HeightRequest="25"
+                        WidthRequest="25"
+                        VerticalOptions="Center"
+                        Source="phone_icon"
+                        />
+                    <Label
+                        Text="Llamar"
+                        FontSize="Medium"
+                        VerticalOptions="Center"
+                        TextColor="{AppThemeBinding Dark={StaticResource Quaternary}, Light=White}"
+                        />
+                </HorizontalStackLayout>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding CallInmuebleOwnerCommand}" />
+                </Border.GestureRecognizers>
+            </Border>
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>

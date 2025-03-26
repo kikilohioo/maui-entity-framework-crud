@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ComShopApp.Views.BookmarkPage"
              xmlns:model="clr-namespace:ComShopApp.Models.Backend.Inmueble"
              xmlns:vm="clr-namespace:ComShopApp.ViewModels"
-             x:DataType="vm:BookmarkViewModel"
-             Title="Guardados">
+             x:DataType="vm:InmuebleListViewModel"
+             x:Class="ComShopApp.Views.InmuebleListPage"
+             Title="Inmuebles disponibles">
     <CollectionView
         Margin="10"
         SelectionMode="Single"
@@ -13,7 +13,7 @@
         SelectedItem="{Binding SelectedInmueble, Mode=TwoWay}"
         >
         <CollectionView.ItemsLayout>
-            <LinearItemsLayout Orientation="Vertical" ItemSpacing="20" />
+            <LinearItemsLayout ItemSpacing="20" Orientation="Vertical" />
         </CollectionView.ItemsLayout>
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="model:InmuebleResponse">
@@ -22,14 +22,14 @@
                         <ColumnDefinition Width="4*" />
                         <ColumnDefinition Width="6*" />
                     </Grid.ColumnDefinitions>
-                    <Border
+                    <Border 
                         Grid.Column="0"
                         Padding="0"
                         >
                         <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
+                            <RoundRectangle CornerRadius="10,10,10,10" />
                         </Border.StrokeShape>
-                        <Image
+                        <Image 
                             HeightRequest="160"
                             Aspect="Fill"
                             Source="{Binding UrlImage}"
@@ -40,15 +40,15 @@
                         Padding="15"
                         Spacing="10"
                         >
-                        <Label
+                        <Label 
                             FontSize="Medium"
                             Text="{Binding Price, StringFormat='{0:C}'}"
                             />
-                        <Label
+                        <Label 
                             FontSize="Small"
                             Text="{Binding Name}"
                             />
-                        <Label
+                        <Label 
                             FontSize="Small"
                             Text="{Binding Address}"
                             />
